@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect
-
+from app01.utils.form import *
 from app01 import models
+from django import forms
 
 
 # Create your views here.
@@ -60,3 +61,30 @@ def user_add(request):
                                    gender=gender, depart_id=depart_id)
 
     return redirect('/user/list/')
+
+
+
+
+def user_model_form_add(request):
+    if request.method == "GET":
+        form = UserModelForm
+        return render(request,'user_model_form_add.html',locals())
+
+    form = UserModelForm(data=request.POST)
+    if form.is_valid():
+        form.save()
+        return redirect('/user/list/')
+
+    return render(request,'user_model_form_add.html',locals())
+
+
+
+
+
+def user_delete(request, nid):
+    models.UserInfo.objects.filter(id=nid).delete()
+    return redirect('/user/list/')
+
+
+def user_edit(request, nid):
+    return
