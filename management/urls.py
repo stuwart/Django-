@@ -16,5 +16,10 @@ urlpatterns = [
     path('user/add/', user_add),
     path('user/model/form/add/', user_model_form_add),
     path('user/<int:nid>/delete/', user_delete),
-    # path('user/<int:nid>/edit/', user_edit),
+    path('user/<int:nid>/edit/', user_edit),
+
+    path('pretty/list/', pretty_list),
+    path('pretty/add/', pretty_add),
+    path('pretty/<int:nid>/edit/',pretty_edit),
+
 ]

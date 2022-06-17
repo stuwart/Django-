@@ -63,22 +63,17 @@ def user_add(request):
     return redirect('/user/list/')
 
 
-
-
 def user_model_form_add(request):
     if request.method == "GET":
         form = UserModelForm
-        return render(request,'user_model_form_add.html',locals())
+        return render(request, 'user_model_form_add.html', locals())
 
     form = UserModelForm(data=request.POST)
     if form.is_valid():
         form.save()
         return redirect('/user/list/')
 
-    return render(request,'user_model_form_add.html',locals())
-
-
-
+    return render(request, 'user_model_form_add.html', locals())
 
 
 def user_delete(request, nid):
@@ -87,4 +82,42 @@ def user_delete(request, nid):
 
 
 def user_edit(request, nid):
-    return
+    row_object = models.UserInfo.objects.filter(id=nid).first()
+    if request.method == "GET":
+        form = UserModelForm(instance=row_object)
+        return render(request, 'user_edit.html', locals())
+    form = UserModelForm(data=request.POST, instance=row_object)
+    if form.is_valid():
+        form.save()
+        return redirect('/user/list')
+    return render(request, 'user_edit.html', locals())
+
+
+def pretty_list(request):
+    queryset = models.PrettyNum.objects.all()
+    return render(request, 'pretty_list.html', locals())
+
+
+def pretty_add(request):
+    if request.method == "GET":
+        form = PrettyModelForm
+        return render(request, 'pretty_add.html', locals())
+
+    form = PrettyModelForm(data=request.POST)
+    if form.is_valid():
+        form.save()
+        return redirect('/pretty/list')
+    return render(request, 'pretty_add.html', locals())
+
+
+def pretty_edit(request, nid):
+    row_object = models.PrettyNum.objects.filter(id=nid).first()
+    if request.method == "GET":
+        form = PrettyModelForm(instance=row_object)
+        return render(request, 'pretty_edit.html', locals())
+    form = PrettyModelForm(data=request.POST, instance=row_object)
+    if form.is_valid():
+        form.save()
+        return redirect('/pretty/list')
+    return render(request, 'pretty_edit.html', locals())
+
