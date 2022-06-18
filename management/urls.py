@@ -22,4 +22,6 @@ urlpatterns = [
     path('pretty/add/', pretty_add),
     path('pretty/<int:nid>/edit/',pretty_edit),
 
+
+
 ]
