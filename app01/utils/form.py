@@ -3,6 +3,7 @@ from app01 import models
 from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
 from app01.utils.bootstrap import *
+from app01.utils.encrypt import *
 
 
 class UserModelForm(BootStrapModelForm):
@@ -61,9 +62,13 @@ class AdminModelForm(BootStrapModelForm):
             'passowrd': forms.PasswordInput(render_value=True),
         }
 
+    def clean_passowrd(self):
+        pwd = self.cleaned_data['passowrd']
+        return md5(pwd)
+
     def clean_confirm_password(self):
         pwd = self.cleaned_data['passowrd']
-        confirm = self.cleaned_data['confirm_password']
+        confirm = md5(self.cleaned_data['confirm_password'])
         if pwd != confirm:
             raise ValidationError('两次输入的密码不一致！')
         return confirm
