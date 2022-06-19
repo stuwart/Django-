@@ -88,14 +88,19 @@ class AdminResetModelForm(BootStrapModelForm):
 
     class Meta:
         model = models.Admin
-        fields = ['password']
+        fields = ['password','confirm_password']
 
     def clean_password(self):
-        pwd = self.cleaned_data['password']
+        pwd = self.cleaned_data.get('password')
+        md5_pwd = md5(pwd)
+
+        exists =models.Admin.objects.filter(id = self.instance.pk,password=md5_pwd).exists()
+        if exists:
+            raise ValidationError('不能与之前的密码一致！')
         return md5(pwd)
 
     def clean_confirm_password(self):
-        pwd = self.cleaned_data['password']
+        pwd = self.cleaned_data.get('password')
         confirm = md5(self.cleaned_data['confirm_password'])
         if pwd != confirm:
             raise ValidationError('两次输入的密码不一致！')
