@@ -26,6 +26,7 @@ class UserModelForm(BootStrapModelForm):
 
 
 class PrettyModelForm(BootStrapModelForm):
+    #验证方式1：
     mobile = forms.CharField(
         label='手机号',
         validators=[RegexValidator(r'^1[3-9]\d{9}$', '手机号格式错误'), ],
@@ -36,7 +37,7 @@ class PrettyModelForm(BootStrapModelForm):
         # fields = ['mobile', 'price', 'level', 'status']
         fields = '__all__'
         # exclude = ['']
-
+    #验证方式2：
     def clean_mobile(self):
         txt_mobile = self.cleaned_data['mobile']
         exists = models.PrettyNum.objects.filter(mobile=txt_mobile).exists()
