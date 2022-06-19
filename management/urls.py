@@ -3,7 +3,7 @@ from django.urls import path, re_path
 from django.views.static import serve
 from django.conf import settings
 
-from app01.views import depart, pretty, user
+from app01.views import depart, pretty, user, admin
 
 urlpatterns = [
     path('', depart.depart_list),
@@ -21,5 +21,8 @@ urlpatterns = [
     path('pretty/list/', pretty.pretty_list),
     path('pretty/add/', pretty.pretty_add),
     path('pretty/<int:nid>/edit/', pretty.pretty_edit),
+
+    path('admin/list/', admin.admin_list),
+    path('admin/add/', admin.admin_add),
 
 ]

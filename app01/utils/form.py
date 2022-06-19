@@ -4,6 +4,7 @@ from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
 from app01.utils.bootstrap import *
 
+
 class UserModelForm(BootStrapModelForm):
     class Meta:
         model = models.UserInfo
@@ -26,7 +27,7 @@ class UserModelForm(BootStrapModelForm):
 
 
 class PrettyModelForm(BootStrapModelForm):
-    #验证方式1：
+    # 验证方式1：
     mobile = forms.CharField(
         label='手机号',
         validators=[RegexValidator(r'^1[3-9]\d{9}$', '手机号格式错误'), ],
@@ -37,10 +38,32 @@ class PrettyModelForm(BootStrapModelForm):
         # fields = ['mobile', 'price', 'level', 'status']
         fields = '__all__'
         # exclude = ['']
-    #验证方式2：
+
+    # 验证方式2：
     def clean_mobile(self):
         txt_mobile = self.cleaned_data['mobile']
         exists = models.PrettyNum.objects.filter(mobile=txt_mobile).exists()
         if exists:
             return ValidationError('该手机号已存在')
         return txt_mobile
+
+
+class AdminModelForm(BootStrapModelForm):
+    confirm_password = forms.CharField(
+        label='确认密码',
+        widget=forms.PasswordInput(render_value=True),
+    )
+
+    class Meta:
+        model = models.Admin
+        fields = '__all__'
+        widgets = {
+            'passowrd': forms.PasswordInput(render_value=True),
+        }
+
+    def clean_confirm_password(self):
+        pwd = self.cleaned_data['passowrd']
+        confirm = self.cleaned_data['confirm_password']
+        if pwd != confirm:
+            raise ValidationError('两次输入的密码不一致！')
+        return confirm

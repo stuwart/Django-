@@ -39,6 +39,9 @@ class PrettyNum(models.Model):
         (1, '已使用'),
         (2, '未使用'),
     )
-    status = models.SmallIntegerField(verbose_name='状态', choices=status_choice,default=2)
+    status = models.SmallIntegerField(verbose_name='状态', choices=status_choice, default=2)
 
 
+class Admin(models.Model):
+    username = models.CharField(verbose_name='用户名', max_length=32)
+    passowrd = models.CharField(verbose_name='密码', max_length=64)
