@@ -59,15 +59,15 @@ class AdminModelForm(BootStrapModelForm):
         model = models.Admin
         fields = '__all__'
         widgets = {
-            'passowrd': forms.PasswordInput(render_value=True),
+            'password': forms.PasswordInput(render_value=True),
         }
 
-    def clean_passowrd(self):
-        pwd = self.cleaned_data['passowrd']
+    def clean_password(self):
+        pwd = self.cleaned_data['password']
         return md5(pwd)
 
     def clean_confirm_password(self):
-        pwd = self.cleaned_data['passowrd']
+        pwd = self.cleaned_data['password']
         confirm = md5(self.cleaned_data['confirm_password'])
         if pwd != confirm:
             raise ValidationError('两次输入的密码不一致！')
