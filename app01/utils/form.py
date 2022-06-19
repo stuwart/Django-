@@ -105,3 +105,24 @@ class AdminResetModelForm(BootStrapModelForm):
         if pwd != confirm:
             raise ValidationError('两次输入的密码不一致！')
         return confirm
+
+
+class LoginForm(BootStrapForm):
+    username = forms.CharField(
+        label='用户名',
+        widget=forms.TextInput(),
+        required=True
+    )
+    password = forms.CharField(
+        label='密码',
+        widget=forms.PasswordInput(render_value=True)
+    )
+    code = forms.CharField(
+        label="验证码",
+        widget=forms.TextInput,
+        required=True
+    )
+
+    def clean_password(self):
+        pwd = self.cleaned_data.get('password')
+        return md5(pwd)
