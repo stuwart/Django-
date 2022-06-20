@@ -8,6 +8,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User
 from app01.utils.code import *
 
+
 def login(request):
     """ 登录 """
     if request.method == "GET":
@@ -60,8 +61,8 @@ def image_code(request):
     # 写入到自己的session中（以便于后续获取验证码再进行校验）
     request.session['image_code'] = code_string
     # 给Session设置60s超时
-    request.session.set_expiry(60)
+    request.session.set_expiry(60 * 60 * 24 * 7)
 
-    stream = BytesIO()  #不写入文件，写入内存
+    stream = BytesIO()  # 不写入文件，写入内存
     img.save(stream, 'png')
     return HttpResponse(stream.getvalue())

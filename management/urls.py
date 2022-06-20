@@ -3,7 +3,7 @@ from django.urls import path, re_path
 from django.views.static import serve
 from django.conf import settings
 
-from app01.views import depart, pretty, user, admin, account
+from app01.views import depart, pretty, user, admin, account, task
 
 urlpatterns = [
     path('', depart.depart_list),
@@ -29,7 +29,10 @@ urlpatterns = [
 
     path('login/', account.login),
     path('logout/', account.loginout),
-    path('image/code/',account.image_code),
+    path('image/code/', account.image_code),
 
+    path('task/list/', task.task_list),
+    path('task/ajax/', task.task_ajax),
+    path('task/add/', task.task_add),
 
 ]
