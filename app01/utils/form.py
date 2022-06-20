@@ -117,11 +117,11 @@ class LoginForm(BootStrapForm):
         label='密码',
         widget=forms.PasswordInput(render_value=True)
     )
-    # code = forms.CharField(
-    #     label="验证码",
-    #     widget=forms.TextInput,
-    #     required=True
-    # )
+    code = forms.CharField(
+        label="验证码",
+        widget=forms.TextInput,
+        required=True
+    )
 
     def clean_password(self):
         pwd = self.cleaned_data.get('password')

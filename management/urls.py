@@ -29,5 +29,7 @@ urlpatterns = [
 
     path('login/', account.login),
     path('logout/', account.loginout),
+    path('image/code/',account.image_code),
+
 
 ]
